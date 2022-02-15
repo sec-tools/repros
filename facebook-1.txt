@@ -1,0 +1,175 @@
+Response from Facebook for these bugs:
+
+"Thanks again for your report. After investigating at length we concluded that these issues cannot lead to code executions..."
+
+Process 2072 launched: '/Applications/Origami Studio.app/Contents/MacOS/Origami Studio' (x86_64)
+
+(without libgmalloc enabled)
+
+(lldb) r crash-1.origami
+
+Process 2049 stopped
+* thread #8, queue = 'com.facebook.Diamond.engine', stop reason = EXC_BAD_ACCESS (code=1, address=0x0)
+    frame #0: 0x00000001008739bd Origami Studio`___lldb_unnamed_symbol43594$$Origami Studio + 893
+Origami Studio`___lldb_unnamed_symbol43594$$Origami Studio:
+->  0x1008739bd <+893>: movl   (%rcx), %eax
+    0x1008739bf <+895>: cmpq   %rax, %r15
+    0x1008739c2 <+898>: jae    0x100873ac4               ; <+1156>
+    0x1008739c8 <+904>: movl   0x4(%rcx,%r15,4), %esi
+Target 0: (Origami Studio) stopped.
+
+(lldb) bt
+* thread #8, queue = 'com.facebook.Diamond.engine', stop reason = EXC_BAD_ACCESS (code=1, address=0x0)
+  * frame #0: 0x00000001008739bd Origami Studio`___lldb_unnamed_symbol43594$$Origami Studio + 893
+    frame #1: 0x0000000100873772 Origami Studio`___lldb_unnamed_symbol43594$$Origami Studio + 306
+    frame #2: 0x00000001015eafca Origami Studio`___lldb_unnamed_symbol78116$$Origami Studio + 5226
+    frame #3: 0x00000001015ea0e0 Origami Studio`___lldb_unnamed_symbol78116$$Origami Studio + 1408
+    frame #4: 0x00000001016099c1 Origami Studio`___lldb_unnamed_symbol78292$$Origami Studio + 561
+    frame #5: 0x000000010160aedf Origami Studio`___lldb_unnamed_symbol78297$$Origami Studio + 607
+    frame #6: 0x00000001015ee2f8 Origami Studio`___lldb_unnamed_symbol78122$$Origami Studio + 408
+    frame #7: 0x00000001015ec465 Origami Studio`diamond::engine::FlatbuffersSerializer::deserialize(folly::F14FastMap<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::vector<unsigned char, std::__1::allocator<unsigned char> >, folly::HeterogeneousAccessHash<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, void>, folly::HeterogeneousAccessEqualTo<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, void>, std::__1::allocator<std::__1::pair<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const, std::__1::vector<unsigned char, std::__1::allocator<unsigned char> > > > > const&, std::__1::shared_ptr<diamond::engine::ResourceManager>, std::__1::shared_ptr<diamond::engine::Composition>&, folly::F14FastMap<unsigned long long, diamond::engine::Value, folly::HeterogeneousAccessHash<unsigned long long, void>, folly::HeterogeneousAccessEqualTo<unsigned long long, void>, std::__1::allocator<std::__1::pair<unsigned long long const, diamond::engine::Value> > >&, folly::F14FastMap<unsigned long long, diamond::engine::ResourceReference, folly::HeterogeneousAccessHash<unsigned long long, void>, folly::HeterogeneousAccessEqualTo<unsigned long long, void>, std::__1::allocator<std::__1::pair<unsigned long long const, diamond::engine::ResourceReference> > >&, unsigned int&, unsigned int&, diamond::engine::ErrorCode&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&) + 2389
+    frame #8: 0x00000001015cea27 Origami Studio`diamond::engine::EditorBridge::processDeserialize(diamond::engine::WireDeserializeRequest const&, diamond::engine::WireDeserializeResponse&) + 327
+    frame #9: 0x00000001015cdeb3 Origami Studio`diamond::engine::EditorBridge::processRequest(std::__1::shared_ptr<diamond::engine::WireTransactionRequest const> const&) + 1875
+    frame #10: 0x0000000100d24d7e Origami Studio`___lldb_unnamed_symbol73791$$Origami Studio + 366
+    frame #11: 0x0000000100d1733e Origami Studio`___lldb_unnamed_symbol73694$$Origami Studio + 414
+    frame #12: 0x0000000100d1829a Origami Studio`___lldb_unnamed_symbol73710$$Origami Studio + 234
+    frame #13: 0x0000000100d17bae Origami Studio`___lldb_unnamed_symbol73703$$Origami Studio + 46
+    frame #14: 0x00007ff811c47ad8 libdispatch.dylib`_dispatch_call_block_and_release + 12
+    frame #15: 0x00007ff811c48cc9 libdispatch.dylib`_dispatch_client_callout + 8
+    frame #16: 0x00007ff811c4ecee libdispatch.dylib`_dispatch_lane_serial_drain + 696
+    frame #17: 0x00007ff811c4f7c8 libdispatch.dylib`_dispatch_lane_invoke + 366
+    frame #18: 0x00007ff811c597e1 libdispatch.dylib`_dispatch_workloop_worker_thread + 758
+    frame #19: 0x00007ff811dfc074 libsystem_pthread.dylib`_pthread_wqthread + 326
+    frame #20: 0x00007ff811dfaffb libsystem_pthread.dylib`start_wqthread + 15
+
+(lldb) reg read
+General Purpose Registers:
+       rax = 0x0000000112fcd1dc
+       rbx = 0x0000000112fc0bd0
+       rcx = 0x0000000000000000
+       rdx = 0x0000000000000000
+       rdi = 0x0000000112fc0bd8
+       rsi = 0x0000000000000008
+       rbp = 0x000070000638df20
+       rsp = 0x000070000638de70
+        r8 = 0x0000000000000000
+        r9 = 0x0000000000000003
+       r10 = 0x0000000000000000
+       r11 = 0x0000000000000246
+       r12 = 0x0000000000000000
+       r13 = 0x000070000638de90
+       r14 = 0x0000000000000004
+       r15 = 0x0000000000000000
+       rip = 0x00000001008739bd  Origami Studio`___lldb_unnamed_symbol43594$$Origami Studio + 893
+    rflags = 0x0000000000010293
+        cs = 0x000000000000002b
+        fs = 0x0000000000000000
+        gs = 0x0000000000000000
+
+(lldb) dis -s $pc-32 -c 24 -m -F intel
+Origami Studio`___lldb_unnamed_symbol43594$$Origami Studio:
+    0x10087399d <+861>: mov    ecx, 0x0
+    0x1008739a2 <+866>: jb     0x1008739bd               ; <+893>
+    0x1008739a4 <+868>: neg    rdx
+    0x1008739a7 <+871>: movzx  ecx, word ptr [rax + rdx + 0x4]
+    0x1008739ac <+876>: test   rcx, rcx
+    0x1008739af <+879>: je     0x100873ab7               ; <+1143>
+    0x1008739b5 <+885>: add    rax, rcx
+    0x1008739b8 <+888>: mov    ecx, dword ptr [rax]
+    0x1008739ba <+890>: add    rcx, rax
+->  0x1008739bd <+893>: mov    eax, dword ptr [rcx]
+    0x1008739bf <+895>: cmp    r15, rax
+    0x1008739c2 <+898>: jae    0x100873ac4               ; <+1156>
+    0x1008739c8 <+904>: mov    esi, dword ptr [rcx + 4*r15 + 0x4]
+    0x1008739cd <+909>: add    rsi, rcx
+    0x1008739d0 <+912>: add    rsi, r14
+    0x1008739d3 <+915>: lea    rdi, [rbp - 0x50]
+    0x1008739d7 <+919>: call   0x100873640               ; <+0>
+    0x1008739dc <+924>: mov    rcx, qword ptr [rbp - 0x70]
+    0x1008739e0 <+928>: mov    eax, dword ptr [rcx + 8*r14 - 0x20]
+    0x1008739e5 <+933>: mov    edi, dword ptr [rbp - 0x50]
+    0x1008739e8 <+936>: cmp    eax, edi
+    0x1008739ea <+938>: jne    0x100873a20               ; <+992>
+    0x1008739ec <+940>: lea    rdx, [rbp - 0x48]
+    0x1008739f0 <+944>: mov    qword ptr [rbp - 0x90], rdx
+(lldb) 
+
+(with libgmalloc enabled)
+
+(lldb) settings set target.env-vars DYLD_INSERT_LIBRARIES=/usr/lib/libgmalloc.dylib
+
+Process 2072 launched: '/Applications/Origami Studio.app/Contents/MacOS/Origami Studio' (x86_64)
+GuardMalloc[Origami Studio-2072]: Allocations will be placed on 16 byte boundaries.
+GuardMalloc[Origami Studio-2072]:  - Some buffer overruns may not be noticed.
+GuardMalloc[Origami Studio-2072]:  - Applications using vector instructions (e.g., SSE) should work.
+GuardMalloc[Origami Studio-2072]: version 064550.77.2
+[Exception Handler]: Setting up Crashpad handler.
+[Exception Handler]: Crashpad URL: https://www.facebook.com/mobile/ios_breakpad_crash_logs/
+GuardMalloc[OrigamiCrashpadHandler-2078]: Allocations will be placed on 16 byte boundaries.
+GuardMalloc[OrigamiCrashpadHandler-2078]:  - Some buffer overruns may not be noticed.
+GuardMalloc[OrigamiCrashpadHandler-2078]:  - Applications using vector instructions (e.g., SSE) should work.
+GuardMalloc[OrigamiCrashpadHandler-2078]: version 064550.77.2
+[Exception Handler]: Crashpad handler successfully initialised.
+Origami Studio[2072:353564] [debug][tid:com.facebook.ReachabilityMonitorInternal][void printReachabilityFlags(SCNetworkReachabilityFlags, const char *)] Reachability Flag Status: _R ------- networkStatusForFlags
+Origami Studio[2072:353542] [debug][tid:com.facebook.ReachabilityMonitorInternal][void printReachabilityState(FBReachabilityState)] Reachability State: WiFi
+Origami Studio[2072:353565] [debug][tid:com.facebook.ReachabilityMonitorInternal][void printReachabilityFlags(SCNetworkReachabilityFlags, const char *)] Reachability Flag Status: _R ------- networkStatusForFlags
+Origami Studio[2072:353542] [debug][tid:com.facebook.ReachabilityMonitorInternal][void printReachabilityState(FBReachabilityState)] Reachability State: WiFi
+Origami Studio[2072:353564] Preview Service Status: 1
+Origami Studio[2072:353608] Cannot make directory /Users/test/Library/Application Support/com.bohemiancoding.sketch3/Plugins/Semaphore Pasteboard.sketchplugin: No such file or directory
+Origami Studio[2072:353576] [debug][tid:com.facebook.Origami.sketchInstall][-[DEAppDelegate applicationDidFinishLaunching:]_block_invoke_2] Installed sketch plugin
+Origami Studio[2072:353576] [debug][tid:NSDocumentController Opening (QOS: UNSPECIFIED)][-[DEDocument init]] Document Cache Directory: /var/folders/qn/z2dtmbrx3174b194mtwj9d280000gp/T/D7E47589-31A6-46FC-A631-BFB87D2401D4-2072-00004E49BD77F6B9
+Origami Studio[2072:353614] [logging] volume does not support data protection, stripping SQLITE_OPEN_FILEPROTECTION_* flags
+Origami Studio[2072:353614] [logging] volume does not support data protection, stripping SQLITE_OPEN_FILEPROTECTION_* flags
+Origami Studio[2072:353542] [tcp] tcp_input [C1.1:3] flags=[R] seq=222626040, ack=0, win=0 state=CLOSED rcv_nxt=222626040, snd_una=1166045209
+Origami Studio[2072:353542] [tcp] tcp_input [C1.1:3] flags=[R] seq=222626040, ack=0, win=0 state=CLOSED rcv_nxt=222626040, snd_una=1166045209
+Origami Studio[2072:353614] [debug][tid:com.facebook.fbkeychainstore][-[FBBaseKeychainStore _load_unsafe:onSuccess:onError:]] Loading keychain item <FBKeychainItemController: 0x73fc1bfd0> with search dictionary {
+    agrp = "V9WTTPBFK9.platformFamily";
+    class = genp;
+    "m_Limit" = "m_LimitOne";
+    "r_Attributes" = 1;
+    "r_Data" = 1;
+    svce = "com.facebook.deviceid";
+}
+Origami Studio[2072:353590] [error][tid:com.apple.root.user-initiated-qos][NSString *FBReadDeviceID()] Error reading deviceID from the keychain: Error Domain=NSOSStatusErrorDomain Code=-25308 "errKCInteractionNotAllowed / errSecInteractionNotAllowed:  / Interaction is not allowed with the Security Server." UserInfo={NSLocalizedDescription=Failed to load the keychain, FBKeychainServiceIDErrorKey=com.facebook.deviceid}
+Origami Studio[2072:353590] [warn][tid:com.apple.root.user-initiated-qos][NSString *FBReadDeviceID()] Couldn't save device ID to Keychain. Generated temporary device ID 681C1E06-AD52-4AB5-8356-AFFEA30D7334.
+GuardMalloc[Origami Studio-2072]: Attempting excessively large memory allocation:  137436565248 bytes
+GuardMalloc[Origami Studio-2072]: If you really wanted to allocate so much memory, launch your executable with the environment variable MALLOC_PERMIT_INSANE_REQUESTS set to any value to circumvent this check.
+GuardMalloc[Origami Studio-2072]: Explicitly trapping into debugger!!!
+Process 2072 stopped
+* thread #13, queue = 'com.facebook.Diamond.engine', stop reason = EXC_BREAKPOINT (code=EXC_I386_BPT, subcode=0x0)
+    frame #0: 0x00000001032684c2 libgmalloc.dylib`breakIfDebugging + 162
+libgmalloc.dylib`breakIfDebugging:
+->  0x1032684c2 <+162>: movq   0x2b67(%rip), %rax        ; (void *)0x00007ff85362a160: __stack_chk_guard
+    0x1032684c9 <+169>: movq   (%rax), %rax
+    0x1032684cc <+172>: cmpq   -0x18(%rbp), %rax
+    0x1032684d0 <+176>: jne    0x1032684de               ; <+190>
+Target 0: (Origami Studio) stopped.
+
+(lldb) bt
+* thread #13, queue = 'com.facebook.Diamond.engine', stop reason = EXC_BREAKPOINT (code=EXC_I386_BPT, subcode=0x0)
+  * frame #0: 0x00000001032684c2 libgmalloc.dylib`breakIfDebugging + 162
+    frame #1: 0x0000000103269358 libgmalloc.dylib`GuardMalloc_mallocInternal + 80
+    frame #2: 0x00007ff811c37ad6 libsystem_malloc.dylib`_malloc_zone_malloc + 125
+    frame #3: 0x00007ff811dbd9aa libc++abi.dylib`operator new(unsigned long) + 26
+    frame #4: 0x0000000100873f6c Origami Studio`___lldb_unnamed_symbol43596$$Origami Studio + 60
+    frame #5: 0x000000010087390c Origami Studio`___lldb_unnamed_symbol43594$$Origami Studio + 716
+    frame #6: 0x0000000100873772 Origami Studio`___lldb_unnamed_symbol43594$$Origami Studio + 306
+    frame #7: 0x00000001015eafca Origami Studio`___lldb_unnamed_symbol78116$$Origami Studio + 5226
+    frame #8: 0x00000001015ea0e0 Origami Studio`___lldb_unnamed_symbol78116$$Origami Studio + 1408
+    frame #9: 0x00000001016099c1 Origami Studio`___lldb_unnamed_symbol78292$$Origami Studio + 561
+    frame #10: 0x000000010160aedf Origami Studio`___lldb_unnamed_symbol78297$$Origami Studio + 607
+    frame #11: 0x00000001015ee2f8 Origami Studio`___lldb_unnamed_symbol78122$$Origami Studio + 408
+    frame #12: 0x00000001015ec465 Origami Studio`diamond::engine::FlatbuffersSerializer::deserialize(folly::F14FastMap<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::vector<unsigned char, std::__1::allocator<unsigned char> >, folly::HeterogeneousAccessHash<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, void>, folly::HeterogeneousAccessEqualTo<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, void>, std::__1::allocator<std::__1::pair<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const, std::__1::vector<unsigned char, std::__1::allocator<unsigned char> > > > > const&, std::__1::shared_ptr<diamond::engine::ResourceManager>, std::__1::shared_ptr<diamond::engine::Composition>&, folly::F14FastMap<unsigned long long, diamond::engine::Value, folly::HeterogeneousAccessHash<unsigned long long, void>, folly::HeterogeneousAccessEqualTo<unsigned long long, void>, std::__1::allocator<std::__1::pair<unsigned long long const, diamond::engine::Value> > >&, folly::F14FastMap<unsigned long long, diamond::engine::ResourceReference, folly::HeterogeneousAccessHash<unsigned long long, void>, folly::HeterogeneousAccessEqualTo<unsigned long long, void>, std::__1::allocator<std::__1::pair<unsigned long long const, diamond::engine::ResourceReference> > >&, unsigned int&, unsigned int&, diamond::engine::ErrorCode&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&) + 2389
+    frame #13: 0x00000001015cea27 Origami Studio`diamond::engine::EditorBridge::processDeserialize(diamond::engine::WireDeserializeRequest const&, diamond::engine::WireDeserializeResponse&) + 327
+    frame #14: 0x00000001015cdeb3 Origami Studio`diamond::engine::EditorBridge::processRequest(std::__1::shared_ptr<diamond::engine::WireTransactionRequest const> const&) + 1875
+    frame #15: 0x0000000100d24d7e Origami Studio`___lldb_unnamed_symbol73791$$Origami Studio + 366
+    frame #16: 0x0000000100d1733e Origami Studio`___lldb_unnamed_symbol73694$$Origami Studio + 414
+    frame #17: 0x0000000100d1829a Origami Studio`___lldb_unnamed_symbol73710$$Origami Studio + 234
+    frame #18: 0x0000000100d17bae Origami Studio`___lldb_unnamed_symbol73703$$Origami Studio + 46
+    frame #19: 0x00007ff811c47ad8 libdispatch.dylib`_dispatch_call_block_and_release + 12
+    frame #20: 0x00007ff811c48cc9 libdispatch.dylib`_dispatch_client_callout + 8
+    frame #21: 0x00007ff811c4ecee libdispatch.dylib`_dispatch_lane_serial_drain + 696
+    frame #22: 0x00007ff811c4f7c8 libdispatch.dylib`_dispatch_lane_invoke + 366
+    frame #23: 0x00007ff811c597e1 libdispatch.dylib`_dispatch_workloop_worker_thread + 758
+    frame #24: 0x00007ff811dfc074 libsystem_pthread.dylib`_pthread_wqthread + 326
+    frame #25: 0x00007ff811dfaffb libsystem_pthread.dylib`start_wqthread + 15

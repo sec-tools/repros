@@ -1,0 +1,107 @@
+Process 2157 launched: '/Applications/Origami Studio.app/Contents/MacOS/Origami Studio' (x86_64)
+
+[Exception Handler]: Setting up Crashpad handler.
+[Exception Handler]: Crashpad URL: https://www.facebook.com/mobile/ios_breakpad_crash_logs/
+[Exception Handler]: Crashpad handler successfully initialised.
+Origami Studio[2157:357947] [debug][tid:com.facebook.ReachabilityMonitorInternal][void printReachabilityFlags(SCNetworkReachabilityFlags, const char *)] Reachability Flag Status: _R ------- networkStatusForFlags
+Origami Studio[2157:357962] [debug][tid:com.facebook.ReachabilityMonitorInternal][void printReachabilityState(FBReachabilityState)] Reachability State: WiFi
+Origami Studio[2157:357962] [debug][tid:com.facebook.ReachabilityMonitorInternal][void printReachabilityFlags(SCNetworkReachabilityFlags, const char *)] Reachability Flag Status: _R ------- networkStatusForFlags
+Origami Studio[2157:357947] [debug][tid:com.facebook.ReachabilityMonitorInternal][void printReachabilityState(FBReachabilityState)] Reachability State: WiFi
+Origami Studio[2157:357962] Preview Service Status: 1
+Origami Studio[2157:357963] [debug][tid:NSDocumentController Opening (QOS: UNSPECIFIED)][-[DEDocument init]] Document Cache Directory: /var/folders/qn/z2dtmbrx3174b194mtwj9d280000gp/T/600B4249-222F-4AED-90EA-0B4763C90335-2157-00004EEAE14CAAEB
+Origami Studio[2157:357935] Cannot make directory /Users/test/Library/Application Support/com.bohemiancoding.sketch3/Plugins/Semaphore Pasteboard.sketchplugin: No such file or directory
+Origami Studio[2157:357934] [debug][tid:com.facebook.Origami.sketchInstall][-[DEAppDelegate applicationDidFinishLaunching:]_block_invoke_2] Installed sketch plugin
+Origami Studio[2157:357963] [logging] volume does not support data protection, stripping SQLITE_OPEN_FILEPROTECTION_* flags
+Origami Studio[2157:357963] [logging] volume does not support data protection, stripping SQLITE_OPEN_FILEPROTECTION_* flags
+Process 2157 stopped
+
+* thread #4, queue = 'NSDocumentController Opening (QOS: UNSPECIFIED)', stop reason = EXC_BAD_ACCESS (code=1, address=0x10ebe43c9)
+    frame #0: 0x00000001004d4832 Origami Studio`___lldb_unnamed_symbol31293$$Origami Studio + 38
+Origami Studio`___lldb_unnamed_symbol31293$$Origami Studio:
+->  0x1004d4832 <+38>: cmpw   $0x9901, (%rcx)           ; imm = 0x9901 
+    0x1004d4837 <+43>: je     0x1004d4846               ; <+58>
+    0x1004d4839 <+45>: movzwl 0x2(%rcx), %esi
+    0x1004d483d <+49>: addq   %rsi, %rcx
+Target 0: (Origami Studio) stopped.
+
+(lldb) bt
+* thread #4, queue = 'NSDocumentController Opening (QOS: UNSPECIFIED)', stop reason = EXC_BAD_ACCESS (code=1, address=0x10ebe43c9)
+  * frame #0: 0x00000001004d4832 Origami Studio`___lldb_unnamed_symbol31293$$Origami Studio + 38
+    frame #1: 0x00000001004d47c1 Origami Studio`___lldb_unnamed_symbol31292$$Origami Studio + 129
+    frame #2: 0x00000001004d1463 Origami Studio`___lldb_unnamed_symbol31190$$Origami Studio + 761
+    frame #3: 0x00000001004d10f5 Origami Studio`___lldb_unnamed_symbol31188$$Origami Studio + 257
+    frame #4: 0x00000001004d0e05 Origami Studio`___lldb_unnamed_symbol31184$$Origami Studio + 117
+    frame #5: 0x0000000101975fb9 Origami Studio`___lldb_unnamed_symbol85564$$Origami Studio + 121
+    frame #6: 0x000000010196767b Origami Studio`___lldb_unnamed_symbol85363$$Origami Studio + 107
+    frame #7: 0x00000001005d30a2 Origami Studio`___lldb_unnamed_symbol35067$$Origami Studio + 162
+    frame #8: 0x00007ff814bddbb1 AppKit`-[NSDocument _initWithContentsOfURL:ofType:error:] + 161
+    frame #9: 0x00007ff814bddaab AppKit`-[NSDocument initWithContentsOfURL:ofType:error:] + 226
+    frame #10: 0x00007ff814c44463 AppKit`-[NSDocumentController makeDocumentWithContentsOfURL:ofType:error:] + 586
+    frame #11: 0x00007ff814e43aa7 AppKit`__97-[NSDocumentController makeDocumentWithContentsOfURL:alternateContents:ofType:completionHandler:]_block_invoke + 91
+    frame #12: 0x00007ff812d0d492 Foundation`__NSBLOCKOPERATION_IS_CALLING_OUT_TO_A_BLOCK__ + 7
+    frame #13: 0x00007ff812d0d38a Foundation`-[NSBlockOperation main] + 98
+    frame #14: 0x00007ff812d0d321 Foundation`__NSOPERATION_IS_INVOKING_MAIN__ + 17
+    frame #15: 0x00007ff812d0c58f Foundation`-[NSOperation start] + 785
+    frame #16: 0x00007ff812d0c265 Foundation`__NSOPERATIONQUEUE_IS_STARTING_AN_OPERATION__ + 17
+    frame #17: 0x00007ff812d0c13a Foundation`__NSOQSchedule_f + 182
+    frame #18: 0x00007ff811c55d0d libdispatch.dylib`_dispatch_block_async_invoke2 + 83
+    frame #19: 0x00007ff811c48cc9 libdispatch.dylib`_dispatch_client_callout + 8
+    frame #20: 0x00007ff811c4b746 libdispatch.dylib`_dispatch_continuation_pop + 460
+    frame #21: 0x00007ff811c4aded libdispatch.dylib`_dispatch_async_redirect_invoke + 716
+    frame #22: 0x00007ff811c583ba libdispatch.dylib`_dispatch_root_queue_drain + 343
+    frame #23: 0x00007ff811c58b5a libdispatch.dylib`_dispatch_worker_thread2 + 160
+    frame #24: 0x00007ff811dfc02e libsystem_pthread.dylib`_pthread_wqthread + 256
+    frame #25: 0x00007ff811dfaffb libsystem_pthread.dylib`start_wqthread + 15
+    
+(lldb) reg read
+General Purpose Registers:
+       rax = 0x0000000000000000
+       rbx = 0x0000600001285c20
+       rcx = 0x000000010ebe43c9
+       rdx = 0x000000010ebebd3b
+       rdi = 0x000000010ebdd434
+       rsi = 0x00007ff82c588e72  
+       rbp = 0x0000700007956700
+       rsp = 0x0000700007956700
+        r8 = 0x0000000000000004
+        r9 = 0xfffffffef14225d9
+       r10 = 0x00000001028578f0  (void *)0x00000001028578c8: ZZArchiveEntry
+       r11 = 0x00007ff811c98a42  libobjc.A.dylib`-[NSObject init]
+       r12 = 0x000000010ebdd434
+       r13 = 0x0000000000000008
+       r14 = 0x0000000000000004
+       r15 = 0x000000010ebd1004
+       rip = 0x00000001004d4832  Origami Studio`___lldb_unnamed_symbol31293$$Origami Studio + 38
+    rflags = 0x0000000000010297
+        cs = 0x000000000000002b
+        fs = 0x0000000000000000
+        gs = 0x0000000000000000
+
+(lldb) dis -s $pc-32 -c 24 -m -F intel
+Origami Studio`___lldb_unnamed_symbol31293$$Origami Studio:
+    0x1004d4812 <+6>:  sbb    al, 0x48
+    0x1004d4815 <+9>:  lea    edx, [rdi + rax]
+    0x1004d4818 <+12>: lea    rcx, [rdi + rax]
+    0x1004d481c <+16>: add    rcx, 0x2e
+    0x1004d4820 <+20>: movzx  eax, word ptr [rdi + 0x1e]
+    0x1004d4824 <+24>: add    rdx, rax
+    0x1004d4827 <+27>: add    rdx, 0x2e
+    0x1004d482b <+31>: xor    eax, eax
+    0x1004d482d <+33>: cmp    rcx, rdx
+    0x1004d4830 <+36>: jae    0x1004d4849               ; <+61>
+->  0x1004d4832 <+38>: cmp    word ptr [rcx], 0x9901
+    0x1004d4837 <+43>: je     0x1004d4846               ; <+58>
+    0x1004d4839 <+45>: movzx  esi, word ptr [rcx + 0x2]
+    0x1004d483d <+49>: add    rcx, rsi
+    0x1004d4840 <+52>: add    rcx, 0x4
+    0x1004d4844 <+56>: jmp    0x1004d482d               ; <+33>
+    0x1004d4846 <+58>: mov    rax, rcx
+    0x1004d4849 <+61>: pop    rbp
+    0x1004d484a <+62>: ret    
+
+Origami Studio`___lldb_unnamed_symbol31294$$Origami Studio:
+    0x1004d484b <+0>:  push   rbp
+    0x1004d484c <+1>:  mov    rbp, rsp
+    0x1004d484f <+4>:  push   r14
+    0x1004d4851 <+6>:  push   rbx
+    0x1004d4852 <+7>:  mov    rax, rdi
